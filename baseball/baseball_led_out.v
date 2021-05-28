@@ -8,7 +8,7 @@ module baseball_led_out(
 	input wire [3:0] add_to_score,
 	output wire team0_led, team1_led,
 	output wire base1_led, base2_led, base3_led,
-	output wire [7:0] score0_led, score1_led
+	output wire [6:0] score0_led, score1_led
 );
 
 	function [3:0] score_enc(input [3:0] wires);
@@ -40,26 +40,26 @@ module baseball_led_out(
 	end
 
 
-	function [7:0] hex7segdec(input [3:0] hex);
+	function [6:0] hex7segdec(input [3:0] hex);
 	begin
 		case (hex)
-			4'b0000: hex7segdec = 8'b00000011;
-			4'b0001: hex7segdec = 8'b10011111;
-			4'b0010: hex7segdec = 8'b00100101;
-			4'b0011: hex7segdec = 8'b00001101;
-			4'b0100: hex7segdec = 8'b10011001;
-			4'b0101: hex7segdec = 8'b01001001;
-			4'b0110: hex7segdec = 8'b01000001;
-			4'b0111: hex7segdec = 8'b00011111;
-			4'b1000: hex7segdec = 8'b00000001;
-			4'b1001: hex7segdec = 8'b00001001;
-			4'b1010: hex7segdec = 8'b00010001;
-			4'b1011: hex7segdec = 8'b11000001;
-			4'b1100: hex7segdec = 8'b11100101;
-			4'b1101: hex7segdec = 8'b10000101;
-			4'b1110: hex7segdec = 8'b01100001;
-			4'b1111: hex7segdec = 8'b01110001;
-			default: hex7segdec = 8'b10010001; // X
+			4'b0000: hex7segdec = 7'b0000001;
+			4'b0001: hex7segdec = 7'b1001111;
+			4'b0010: hex7segdec = 7'b0010010;
+			4'b0011: hex7segdec = 7'b0000110;
+			4'b0100: hex7segdec = 7'b1001100;
+			4'b0101: hex7segdec = 7'b0100100;
+			4'b0110: hex7segdec = 7'b0100000;
+			4'b0111: hex7segdec = 7'b0001111;
+			4'b1000: hex7segdec = 7'b0000000;
+			4'b1001: hex7segdec = 7'b0000100;
+			4'b1010: hex7segdec = 7'b0001000;
+			4'b1011: hex7segdec = 7'b1100000;
+			4'b1100: hex7segdec = 7'b1110010;
+			4'b1101: hex7segdec = 7'b1000010;
+			4'b1110: hex7segdec = 7'b0110000;
+			4'b1111: hex7segdec = 7'b0111000;
+			default: hex7segdec = 7'b1001000; // X
 		endcase
 	end
 	endfunction

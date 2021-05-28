@@ -15,7 +15,7 @@ module outcount_led_out(
 );
 
 	reg [2:0] sreg;
-	wire next_sreg;
+	wire [2:0] next_sreg;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin

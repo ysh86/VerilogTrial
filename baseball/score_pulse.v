@@ -14,7 +14,8 @@ module score_pulse(
 );
 
 	reg [2:0] sreg;
-	wire next_sreg, next_add_to_score1, next_add_to_score2, next_add_to_score3, next_add_to_score4;
+	wire [2:0] next_sreg;
+	wire next_add_to_score1, next_add_to_score2, next_add_to_score3, next_add_to_score4;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin
@@ -42,7 +43,7 @@ module score_pulse(
 				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
 			`IDLE: begin
-				case (basehit)
+				casex (basehit)
 					7'bxx1_1000,
 					7'bx10_0100,
 					7'bx01_0100,

@@ -67,7 +67,7 @@ module baseball_top(
 		end
 	end
 
-	assign reset_n_for_base_and_score = (!reset_n || change_pulse) ? 0 : 1;
+	assign reset_n_for_base_and_score = (!reset_n || change_pulse) ? 1'b0 : 1'b1;
 
 	base base(
 		clk_divided, reset_n_for_base_and_score,

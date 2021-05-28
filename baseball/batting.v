@@ -22,7 +22,7 @@ module batting(
 );
 
 	reg [3:0] sreg;
-	wire next_sreg;
+	wire [3:0] next_sreg;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin

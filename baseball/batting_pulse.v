@@ -18,7 +18,8 @@ module batting_pulse(
 );
 
 	reg [2:0] sreg;
-	wire next_sreg, next_hit1_o, next_hit2_o, next_hit3_o, next_hit4_o, next_out_signal_o;
+	wire [2:0] next_sreg;
+	wire next_hit1_o, next_hit2_o, next_hit3_o, next_hit4_o, next_out_signal_o;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin

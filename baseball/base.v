@@ -17,7 +17,8 @@ module base(
 );
 
 	reg [2:0] sreg;
-	wire next_sreg, next_base1, next_base2, next_base3;
+	wire [2:0] next_sreg;
+	wire next_base1, next_base2, next_base3;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin
