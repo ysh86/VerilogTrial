@@ -11,18 +11,18 @@
 module batting_pulse(
 	input wire clk,
 	input wire reset_n,
-	input reg start,
-	input wire [4:0] hitout,     // hit1,hit2,hit3,hit4,out
-	output wire [3:0] hit_pulse, // hit1,hit2,hit3,hit4
-	output wire out_pulse
+	input wire start,
+	input wire [4:0] hitout,    // hit1,hit2,hit3,hit4,out
+	output reg [3:0] hit_pulse, // hit1,hit2,hit3,hit4
+	output reg out_pulse
 );
 
-	reg [2:0] sreg, next_sreg;
-	reg next_hit1_o, next_hit2_o, next_hit3_o, next_hit4_o, next_out_signal_o;
+	reg [2:0] sreg;
+	wire next_sreg, next_hit1_o, next_hit2_o, next_hit3_o, next_hit4_o, next_out_signal_o;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin
-			sreg <= IDLE;
+			sreg <= `IDLE;
 			hit_pulse <= 4'b0000;
 			out_pulse <= 1'b0;
 		end else begin
@@ -35,52 +35,52 @@ module batting_pulse(
 	function [7:0] pulse(input [2:0] state, input start, input [4:0] hitout);
 	begin
 		case (state)
-			ONE_BASE: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+			`ONE_BASE: begin
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
-			TWO_BASE: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+			`TWO_BASE: begin
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
-			THREE_BASE: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+			`THREE_BASE: begin
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
-			HOMERUN: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+			`HOMERUN: begin
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
-			BATTER_OUT: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+			`BATTER_OUT: begin
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
-			IDLE: begin
+			`IDLE: begin
 				if (start) begin
-					pulse = {WAIT_STOP, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+					pulse = {`WAIT_STOP, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 				end else begin
-					pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+					pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 				end
 			end
-			WAIT_STOP: begin
+			`WAIT_STOP: begin
 				case ({start,hitout})
 					6'b010000: begin
-						pulse = {ONE_BASE, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0};
+						pulse = {`ONE_BASE, 1'b1, 1'b0, 1'b0, 1'b0, 1'b0};
 					end
 					6'b001000: begin
-						pulse = {TWO_BASE, 1'b0, 1'b1, 1'b0, 1'b0, 1'b0};
+						pulse = {`TWO_BASE, 1'b0, 1'b1, 1'b0, 1'b0, 1'b0};
 					end
 					6'b000100: begin
-						pulse = {THREE_BASE, 1'b0, 1'b0, 1'b1, 1'b0, 1'b0};
+						pulse = {`THREE_BASE, 1'b0, 1'b0, 1'b1, 1'b0, 1'b0};
 					end
 					6'b000010: begin
-						pulse = {HOMERUN, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0};
+						pulse = {`HOMERUN, 1'b0, 1'b0, 1'b0, 1'b1, 1'b0};
 					end
 					6'b000001: begin
-						pulse = {BATTER_OUT, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1};
+						pulse = {`BATTER_OUT, 1'b0, 1'b0, 1'b0, 1'b0, 1'b1};
 					end
 					default: begin
-						pulse = {WAIT_STOP, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+						pulse = {`WAIT_STOP, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 					end
 				endcase
 			end
 			default: begin
-				pulse = {IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
+				pulse = {`IDLE, 1'b0, 1'b0, 1'b0, 1'b0, 1'b0};
 			end
 		endcase
 	end

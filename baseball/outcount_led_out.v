@@ -14,11 +14,12 @@ module outcount_led_out(
 	output wire change_pulse
 );
 
-	reg [2:0] sreg, next_sreg;
+	reg [2:0] sreg;
+	wire next_sreg;
 
 	always @(posedge clk, negedge reset_n) begin
 		if (!reset_n) begin
-			sreg <= NO_OUT;
+			sreg <= `NO_OUT;
 		end else begin
 			sreg <= next_sreg;
 		end
@@ -27,40 +28,40 @@ module outcount_led_out(
 	function [6:0] outchange(input [2:0] state, input out_pulse);
 	begin
 		case (state)
-			NO_OUT: begin
+			`NO_OUT: begin
 				if (out_pulse) begin
-					outchange = {1'b1, 1'b1, 1'b1, 1'b0, ONE_OUT};
+					outchange = {1'b1, 1'b1, 1'b1, 1'b0, `ONE_OUT};
 				end else begin
-					outchange = {1'b1, 1'b1, 1'b1, 1'b0, NO_OUT};
+					outchange = {1'b1, 1'b1, 1'b1, 1'b0, `NO_OUT};
 				end
 			end
-			ONE_OUT: begin
+			`ONE_OUT: begin
 				if (out_pulse) begin
-					outchange = {1'b0, 1'b1, 1'b1, 1'b0, TWO_OUT};
+					outchange = {1'b0, 1'b1, 1'b1, 1'b0, `TWO_OUT};
 				end else begin
-					outchange = {1'b0, 1'b1, 1'b1, 1'b0, ONE_OUT};
+					outchange = {1'b0, 1'b1, 1'b1, 1'b0, `ONE_OUT};
 				end
 			end
-			TWO_OUT: begin
+			`TWO_OUT: begin
 				if (out_pulse) begin
-					outchange = {1'b0, 1'b0, 1'b1, 1'b0, THREE_OUT};
+					outchange = {1'b0, 1'b0, 1'b1, 1'b0, `THREE_OUT};
 				end else begin
-					outchange = {1'b0, 1'b0, 1'b1, 1'b0, TWO_OUT};
+					outchange = {1'b0, 1'b0, 1'b1, 1'b0, `TWO_OUT};
 				end
 			end
-			THREE_OUT: begin
-				outchange = {1'b0, 1'b0, 1'b0, 1'b1, CHANGE_TEAM};
+			`THREE_OUT: begin
+				outchange = {1'b0, 1'b0, 1'b0, 1'b1, `CHANGE_TEAM};
 			end
-			CHANGE_TEAM: begin
-				outchange = {1'b0, 1'b0, 1'b0, 1'b0, NO_OUT};
+			`CHANGE_TEAM: begin
+				outchange = {1'b0, 1'b0, 1'b0, 1'b0, `NO_OUT};
 			end
 			default: begin
-				outchange = {1'b1, 1'b1, 1'b1, 1'b0, NO_OUT};
+				outchange = {1'b1, 1'b1, 1'b1, 1'b0, `NO_OUT};
 			end
 		endcase
 	end
 	endfunction
 
-	assign {outcount1_led, outcount2_led, outcount3_led, change_pulse, next_sreg} = outchange(sreg, out_signal);
+	assign {outcount1_led, outcount2_led, outcount3_led, change_pulse, next_sreg} = outchange(sreg, out_pulse);
 
 endmodule

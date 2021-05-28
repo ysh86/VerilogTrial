@@ -4,7 +4,7 @@
 
 module clk_div(
 	input wire clk,
-	output wire clk_o,
+	output wire clk_o
 );
 
 	reg [`DIV_BITS-1:0] div_counter;

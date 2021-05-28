@@ -3,7 +3,7 @@
 module baseball_led_out(
 	input wire clk,
 	input wire reset_n,
-	input reg team,
+	input wire team,
 	input wire [2:0] base,
 	input wire [3:0] add_to_score,
 	output wire team0_led, team1_led,
